@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 
@@ -12,4 +14,8 @@ app.get('/', (req,res) => {
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
+});
+
+app.get('/message', (req,res) => {
+  res.send({message: process.env.MESSAGE})
 });
