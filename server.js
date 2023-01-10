@@ -8,7 +8,7 @@ const { response } = require('express');
 const app = express();
 app.use(cors());
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 
 app.get('/', (req,res) => {
   res.send({message: "Hello World!"})
@@ -30,5 +30,27 @@ app.get('/search/:book', async (req,res) => {
   .then((data) => {
     results = data;
   })
-  res.send(results.items);
+  res.send(results);
+})
+
+app.get('/test/:book', async (req,res) => {
+  const book = req.params.book;
+  let results = [
+    {
+      title: book,
+      author: "Mikey boi",
+      year: 1999
+    },
+    {
+      title: book,
+      author: "Mikey boo",
+      year: 1995
+    },
+    {
+      title: book,
+      author: "Mikey boy",
+      year: 1992
+    }
+  ]
+  res.send(results);
 })
