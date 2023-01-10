@@ -1,7 +1,9 @@
 require('dotenv').config();
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const express = require('express');
 const cors = require('cors');
+const { response } = require('express');
 
 const app = express();
 app.use(cors());
@@ -20,7 +22,13 @@ app.get('/message', (req,res) => {
   res.send({message: process.env.MESSAGE})
 });
 
-app.get('/search/:book', (req,res) => {
+app.get('/search/:book', async (req,res) => {
   const book = req.params.book;
-  res.send({yourQuery: book});
+  let results;
+  await fetch(`https://www.googleapis.com/books/v1/volumes?q=${book}&key=${process.env.BOOK_API}&language=en`)
+  .then(response => response.json())
+  .then((data) => {
+    results = data;
+  })
+  res.send({yourQuery: results});
 })
