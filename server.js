@@ -19,3 +19,8 @@ app.listen(port, () => {
 app.get('/message', (req,res) => {
   res.send({message: process.env.MESSAGE})
 });
+
+app.get('/search/:book', (req,res) => {
+  const book = req.params.book;
+  res.send({yourQuery: book});
+})
