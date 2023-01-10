@@ -30,5 +30,5 @@ app.get('/search/:book', async (req,res) => {
   .then((data) => {
     results = data;
   })
-  res.send({yourQuery: results});
+  res.send(results.items);
 })
