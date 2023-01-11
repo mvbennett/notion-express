@@ -24,11 +24,13 @@ app.get('/message', (req,res) => {
 
 app.get('/search/:book', async (req,res) => {
   const book = req.params.book;
-  let results;
+  let results = [];
   await fetch(`https://www.googleapis.com/books/v1/volumes?q=${book}&key=${process.env.BOOK_API}&language=en`)
   .then(response => response.json())
   .then((data) => {
-    results = data;
+    data.items.forEach(item => {
+      results.push(item.volumeInfo)
+    });;
   })
   res.send(results);
 })
